@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterviewAI - Interview Preparation Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= LOGIN / SIGNUP ================= -->
+<div id="authScreen" class="auth-screen">
+
+    <div class="auth-container">
+
+        <div class="auth-left">
+            <div class="brand large-brand">
+                <div class="brand-icon">AI</div>
+                <div>
+                    <h1>InterviewAI</h1>
+                    <p>Smart Interview Preparation</p>
+                </div>
+            </div>
+
+            <h2>Prepare Smarter.<br>Interview Better.</h2>
+
+            <p class="auth-description">
+                Practice interviews, improve your answers, analyze your resume
+                and track your preparation progress using one smart platform.
+            </p>
+
+            <div class="features">
+                <div>✓ AI-style interview practice</div>
+                <div>✓ Technical & HR questions</div>
+                <div>✓ Resume analysis</div>
+                <div>✓ Progress tracking</div>
+            </div>
+        </div>
+
+        <div class="auth-card">
+
+            <!-- Login -->
+            <div id="loginForm">
+                <h2>Welcome Back</h2>
+                <p class="form-subtitle">Login to continue your preparation</p>
+
+                <form id="login">
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                    <button type="submit" class="primary-btn">
+                        Login
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Don't have an account?
+                    <button type="button" onclick="showSignup()">
+                        Create Account
+                    </button>
+                </p>
+            </div>
+
+            <!-- Signup -->
+            <div id="signupForm" class="hidden">
+                <h2>Create Account</h2>
+                <p class="form-subtitle">Start your interview preparation</p>
+
+                <form id="signup">
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        id="signupName"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Create a password"
+                        minlength="6"
+                        required
+                    >
+
+                    <button type="submit" class="primary-btn">
+                        Create Account
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Already have an account?
+                    <button type="button" onclick="showLogin()">
+                        Login
+                    </button>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= MAIN WEBSITE ================= -->
+<div id="mainApp" class="app hidden">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">AI</div>
+            <div>
+                <h2>InterviewAI</h2>
+                <span>Preparation Assistant</span>
+            </div>
+        </div>
+
+        <nav>
+            <button class="nav-item active" onclick="showPage('dashboard', this)">
+                <span>⌂</span> Dashboard
+            </button>
+
+            <button class="nav-item" onclick="showPage('practice', this)">
+                <span>🎤</span> Practice Interview
+            </button>
+
+            <button class="nav-item" onclick="showPage('questions', this)">
+                <span>📚</span> Question Bank
+            </button>
+
+            <button class="nav-item" onclick="showPage('resume', this)">
+                <span>📄</span> Resume Analysis
+            </button>
+
+            <button class="nav-item" onclick="showPage('progress', this)">
+                <span>📊</span> My Progress
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="user-mini">
+                <div class="avatar" id="sidebarAvatar">U</div>
+                <div>
+                    <strong id="sidebarName">User</strong>
+                    <small>Candidate</small>
+                </div>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">
+                ⇥ Logout
+            </button>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <!-- ================= DASHBOARD ================= -->
+        <section id="dashboard" class="page active-page">
+
+            <div class="topbar">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, <span id="welcomeName">Candidate</span>!</p>
+                </div>
+
+                <button class="profile-avatar" id="profileAvatar">
+                    U
+                </button>
+            </div>
+
+            <div class="hero-card">
+
+                <div>
+                    <span class="hero-label">AI INTERVIEW ASSISTANT</span>
+
+                    <h2>
+                        Your next interview<br>
+                        starts with preparation.
+                    </h2>
+
+                    <p>
+                        Practice realistic questions and build confidence
+                        before your real interview.
+                    </p>
+
+                    <button class="hero-button" onclick="startPractice()">
+                        Start Practice →
+                    </button>
+                </div>
+
+                <div class="hero-graphic">
+                    <div class="ai-circle">AI</div>
+                    <div class="floating-card card-one">💡 Smart Questions</div>
+                    <div class="floating-card card-two">📈 Track Progress</div>
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">🎤</div>
+                    <div>
+                        <span>Interviews</span>
+                        <strong id="totalInterviews">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">✓</div>
+                    <div>
+                        <span>Questions Answered</span>
+                        <strong id="questionsAnswered">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">★</div>
+                    <div>
+                        <span>Average Score</span>
+                        <strong id="averageScore">0%</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">🔥</div>
+                    <div>
+                        <span>Preparation Streak</span>
+                        <strong id="streak">1 Day</strong>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div>
+                            <h3>Quick Practice</h3>
+                            <p>Select a role to begin.</p>
+                        </div>
+                    </div>
+
+                    <div class="role-grid">
+                        <button onclick="quickRole('Software Developer')">
+                            💻 Software Developer
+                        </button>
+
+                        <button onclick="quickRole('Data Analyst')">
+                            📊 Data Analyst
+                        </button>
+
+                        <button onclick="quickRole('Web Developer')">
+                            🌐 Web Developer
+                        </button>
+
+                        <button onclick="quickRole('HR')">
+                            👥 HR Interview
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div>
+                            <h3>Preparation Tips</h3>
+                            <p>Improve your interview performance.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip">
+                        <span>1</span>
+                        Understand the question before answering.
+                    </div>
+
+                    <div class="tip">
+                        <span>2</span>
+                        Give practical examples whenever possible.
+                    </div>
+
+                    <div class="tip">
+                        <span>3</span>
+                        Keep your answers clear and structured.
+                    </div>
+
+                    <div class="tip">
+                        <span>4</span>
+                        Practice regularly to improve confidence.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PRACTICE ================= -->
+        <section id="practice" class="page">
+
+            <div class="page-header">
+                <h1>Practice Interview</h1>
+                <p>Choose your interview settings and start practicing.</p>
+            </div>
+
+            <div id="practiceSetup" class="practice-card">
+
+                <h2>Configure Your Interview</h2>
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+                        <label>Job Role</label>
+
+                        <select id="jobRole">
+                            <option>Software Developer</option>
+                            <option>Web Developer</option>
+                            <option>Data Analyst</option>
+                            <option>Frontend Developer</option>
+                            <option>Backend Developer</option>
+                            <option>HR</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Interview Type</label>
+
+                        <select id="interviewType">
+                            <option>Technical</option>
+                            <option>HR</option>
+                            <option>Mixed</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Number of Questions</label>
+
+                        <select id="questionCount">
+                            <option value="5">5 Questions</option>
+                            <option value="10">10 Questions</option>
+                            <option value="15">15 Questions</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <h3>Difficulty</h3>
+
+                <div class="difficulty-options">
+                    <button class="difficulty active" data-level="Easy">
+                        Easy
+                    </button>
+
+                    <button class="difficulty" data-level="Medium">
+                        Medium
+                    </button>
+
+                    <button class="difficulty" data-level="Hard">
+                        Hard
+                    </button>
+                </div>
+
+                <button class="primary-btn start-btn" onclick="generateInterview()">
+                    Start Interview
+                </button>
+
+            </div>
+
+
+            <!-- Interview Area -->
+            <div id="interviewArea" class="interview-area hidden">
+
+                <div class="interview-top">
+
+                    <div>
+                        <span id="questionNumber">Question 1</span>
+                        <h2 id="questionText"></h2>
+                    </div>
+
+                    <div class="timer" id="timer">
+                        02:00
+                    </div>
+
+                </div>
+
+                <div class="progress-line">
+                    <div id="interviewProgress"></div>
+                </div>
+
+                <textarea
+                    id="answerInput"
+                    placeholder="Type your answer here..."
+                ></textarea>
+
+                <div class="interview-actions">
+
+                    <button class="secondary-btn" onclick="skipQuestion()">
+                        Skip
+                    </button>
+
+                    <button class="primary-btn" onclick="submitAnswer()">
+                        Submit Answer
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Result -->
+            <div id="resultArea" class="result-card hidden">
+
+                <div class="result-icon">✓</div>
+
+                <h2>Interview Completed!</h2>
+
+                <p>Your practice interview has been completed.</p>
+
+                <div class="result-score">
+                    <span id="finalScore">0%</span>
+                </div>
+
+                <p id="resultMessage"></p>
+
+                <button class="primary-btn" onclick="resetInterview()">
+                    Practice Again
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= QUESTION BANK ================= -->
+        <section id="questions" class="page">
+
+            <div class="page-header">
+                <h1>Question Bank</h1>
+                <p>Explore common interview questions.</p>
+            </div>
+
+            <div class="filters">
+
+                <select id="categoryFilter" onchange="filterQuestions()">
+                    <option value="All">All Categories</option>
+                    <option value="Technical">Technical</option>
+                    <option value="HR">HR</option>
+                    <option value="Behavioral">Behavioral</option>
+                </select>
+
+                <select id="difficultyFilter" onchange="filterQuestions()">
+                    <option value="All">All Difficulties</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+
+            </div>
+
+            <div id="questionList" class="question-list"></div>
+
+        </section>
+
+
+        <!-- ================= RESUME ================= -->
+        <section id="resume" class="page">
+
+            <div class="page-header">
+                <h1>Resume Analysis</h1>
+                <p>Upload your resume and receive basic improvement suggestions.</p>
+            </div>
+
+            <div class="resume-card">
+
+                <div class="upload-icon">📄</div>
+
+                <h2>Upload Your Resume</h2>
+
+                <p>
+                    Supported formats: PDF, DOC, DOCX
+                </p>
+
+                <input
+                    type="file"
+                    id="resumeFile"
+                    accept=".pdf,.doc,.docx"
+                    hidden
+                >
+
+                <button
+                    class="primary-btn"
+                    onclick="document.getElementById('resumeFile').click()"
+                >
+                    Choose Resume
+                </button>
+
+                <p id="fileName"></p>
+
+                <button
+                    class="secondary-btn analyze-btn"
+                    onclick="analyzeResume()"
+                >
+                    Analyze Resume
+                </button>
+
+            </div>
+
+
+            <div id="resumeResult" class="resume-result hidden">
+
+                <h2>Resume Analysis Result</h2>
+
+                <div class="resume-score">
+                    <span id="resumeScore">78%</span>
+                    <small>Resume Score</small>
+                </div>
+
+                <div class="suggestion">
+                    <strong>✓ Good:</strong>
+                    Your resume contains relevant technical skills.
+                </div>
+
+                <div class="suggestion">
+                    <strong>💡 Improve:</strong>
+                    Add measurable achievements to your experience section.
+                </div>
+
+                <div class="suggestion">
+                    <strong>💡 Improve:</strong>
+                    Use concise bullet points for better readability.
+                </div>
+
+                <div class="suggestion">
+                    <strong>✓ Good:</strong>
+                    Your resume has a clear professional structure.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PROGRESS ================= -->
+        <section id="progress" class="page">
+
+            <div class="page-header">
+                <h1>My Progress</h1>
+                <p>Monitor your interview preparation.</p>
+            </div>
+
+            <div class="progress-overview">
+
+                <div class="progress-card">
+                    <span>Total Interviews</span>
+                    <strong id="progressInterviews">0</strong>
+                </div>
+
+                <div class="progress-card">
+                    <span>Questions Answered</span>
+                    <strong id="progressQuestions">0</strong>
+                </div>
+
+                <div class="progress-card">
+                    <span>Average Score</span>
+                    <strong id="progressScore">0%</strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+                <h2>Preparation Progress</h2>
+
+                <div class="big-progress">
+                    <div id="overallProgress"></div>
+                </div>
+
+                <p id="progressText">
+                    Complete your first interview to see your progress.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
